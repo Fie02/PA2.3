@@ -1,0 +1,74 @@
+name: Autograding Tests
+on:
+  push:
+    branches:
+      - assignment
+      - solution
+  repository_dispatch:
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set Jupyter platformdirs environment variable #to remove warning DeprecationWarning: Jupyter is migrating its paths to use standard platformdirs given by the platformdirs library
+      run: echo "JUPYTER_PLATFORM_DIRS=1" >> $GITHUB_ENV
+    - name: Check notebook output for team points
+      id: check-iter
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Check iter
+        setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel pip sympy
+        command: |
+          if grep -q "Team green has 5 points." 3_stem_plots.ipynb && \
+                  grep -q "Team red has 9 points." 3_stem_plots.ipynb && \
+                  grep -q "Team blue has 7 points." 3_stem_plots.ipynb; then
+              echo "All team points found in notebook output."
+          else
+              echo "Missing team points in notebook output."
+              exit 1
+          fi
+        timeout: 10
+        max-score: 10
+    - name: Check notebook
+      id: check-notebook
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Check notebook
+        setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel pip sympy
+        command: |
+          if [ -f "my_earthquake.svg" ]; then
+            rm my_earthquake.svg
+            echo "my_earthquake.svg removed."
+          else
+            echo "my_earthquake.svg does not exist."
+          fi
+          jupyter nbconvert --execute 3_stem_plots.ipynb --to notebook --inplace
+        timeout: 10
+        max-score: 10
+    - name: Check svg
+      id: check-svg
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Check svg
+        command: |
+          if [ -f "my_earthquake.svg" ]; then
+            echo "my_earthquake.svg exists."
+          else
+            echo "my_earthquake.svg does not exist."
+          fi
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CHECK-ITER: "${{steps.check-iter.outputs.result}}"
+        CHECK-NOTEBOOK_RESULTS: "${{steps.check-notebook.outputs.result}}"
+        CHECK-SVG_RESULTS: "${{steps.check-svg.outputs.result}}"
+      with:
+        runners: check-iter,check-notebook,check-svg
