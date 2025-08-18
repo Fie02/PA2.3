@@ -71,4 +71,4 @@ jobs:
         CHECK-NOTEBOOK_RESULTS: "${{steps.check-notebook.outputs.result}}"
         CHECK-SVG_RESULTS: "${{steps.check-svg.outputs.result}}"
       with:
-        runners: check-iter,check-notebook,check-svg
+        runners: check-iter, check-notebook, check-svg
