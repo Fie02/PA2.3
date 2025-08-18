@@ -61,6 +61,7 @@ jobs:
             echo "my_earthquake.svg exists."
           else
             echo "my_earthquake.svg does not exist."
+            exit 1
           fi
         timeout: 10
         max-score: 10
