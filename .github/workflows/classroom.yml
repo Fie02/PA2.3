@@ -25,9 +25,9 @@ jobs:
         test-name: Check iter
         setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel pip sympy
         command: |
-          if grep -q "Team green has 5 points." 3_stem_plots.ipynb && \
-                  grep -q "Team red has 9 points." 3_stem_plots.ipynb && \
-                  grep -q "Team blue has 7 points." 3_stem_plots.ipynb; then
+          if grep -q "Team green has 5 points." 1_iter.ipynb && \
+                  grep -q "Team red has 9 points." 1_iter.ipynb && \
+                  grep -q "Team blue has 7 points." 1_iter.ipynb; then
               echo "All team points found in notebook output."
           else
               echo "Missing team points in notebook output."
