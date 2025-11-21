@@ -23,7 +23,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Check iter
-        setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel
+        setup-command: pip install numpy matplotlib jupyter ipykernel
         command: |
           if grep -q "Team green has 5 points." 1_iter.ipynb && \
                   grep -q "Team red has 9 points." 1_iter.ipynb && \
@@ -40,7 +40,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Check notebook
-        setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel
+        setup-command: pip install numpy matplotlib jupyter ipykernel
         command: |
           if [ -f "my_earthquake.svg" ]; then
             rm my_earthquake.svg
@@ -70,7 +70,7 @@ jobs:
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Check 4_errors notebook
-        setup-command: pip install numpy scipy pandas matplotlib jupyter ipykernel
+        setup-command: pip install numpy pandas jupyter ipykernel
         command: |
           jupyter nbconvert --execute 4_errors.ipynb --to notebook --inplace
         timeout: 10
