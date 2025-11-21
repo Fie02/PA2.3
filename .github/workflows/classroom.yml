@@ -81,7 +81,7 @@ jobs:
       with:
         timeout: 10
         max-score: 10
-        setup-command: pip install numpy matplotlib pandas os
+        setup-command: pip install numpy matplotlib pandas
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
