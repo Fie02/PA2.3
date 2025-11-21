@@ -20,7 +20,7 @@ You'll need to have done 1-3 to be able to make the workshop and group assignmen
 You pass this PA if you:
 - Correct output for task 1.4
 - The notebook for exercise 3 runs without errors
-- Figure from task 3.2 added to this repository
+- Figure from task 3.2 added to this repository from running the notebook.
 - The notebook for exercise 4 runs without errors
 - The py files for task ... don't raise errors when run
 
